@@ -1,5 +1,6 @@
-function sum(a, b) {
-  return a + b;
-}
+const path = require('path');
+console.log(__dirname);
+console.log(__dirname+"/index.js");
+console.log(path.join(__dirname, "../../index.js","projects"));
 
-console.log(sum(1, 2));
+
