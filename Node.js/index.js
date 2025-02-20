@@ -1,23 +1,24 @@
-// const path = require('path');
-// console.log(__dirname);
-// console.log(__dirname+"/index.js");
-// console.log(path.join(__dirname, "../../index.js","projects"));
-
-
 const fs = require('fs');
-const { log } = require('console');
+const { Command } = require('commander');
+const program = new Command();
 
-function main(filename) {
-    fs.readFile(filename,"utf-8",function(err,data){
-        let count = 0
-        for(i = 0 ; i<data.length;i++){
-            if(data[i] === " "){
-                count++;
-            }
-        }
-        console.log(count);
-        
-    })
-}
+program
+  .name('counter')
+  .description('CLI to do file based tasks')
+  .version('0.8.0');
 
-main('a.txt')
+program.command('count')
+  .description('Count the number of lines in a file')
+  .argument('<file>', 'file to count')
+  .action((file) => {
+    fs.readFile(file, 'utf8', (err, data) => {
+      if (err) {
+        console.log(err);
+      } else {
+        const lines = data.split(' ').length;
+        console.log(`There are ${lines} words in ${file}`);
+      }
+    });
+  });
+
+program.parse();
